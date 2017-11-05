@@ -1,10 +1,10 @@
 <template>
   <div class="banner">
-    <div class="bannershow" v-for="item in banner">              <img :src="'http://fuss10.elemecdn.com/' + item.image_hash  + '.jpeg'" >  
+    <div class="bannershow" v-for="item in banner" >              <img :src="'http://fuss10.elemecdn.com/' + item.image_hash  + '.jpeg'" >  
         <p>{{item.name}} </p>
     </div>
-    <button id="point1" class="point" @click="toFirst"></button>
-    <button id="point2" class="point"></button>
+    <div id="point1" class="point" style="left:48vw" @mousemove="toFirst" ></div>
+    <div id="point2" class="point" style="left:52vw" @mousemove="toSec"></div>
 
   </div>
 </template>
@@ -18,12 +18,21 @@
         },
         methods: {
           toFirst(){
-              console.log(11111);
-          }  
+              document.getElementById('point1').style.backgroundColor = "gray";
+              document.getElementById('point2').style.backgroundColor = "#eeeeee";
+
+          }  ,
+          toSec(){
+              document.getElementById('point2').style.backgroundColor = "gray";
+              document.getElementById('point1').style.backgroundColor = "#eeeeee";
+
+              
+          }
         },
         data () {
             return {
-                banner:[]
+                banner:[],
+                bannerState:true
             }
         },
         mounted () {
@@ -31,7 +40,6 @@
           if (res.data) {
               this.status = 'success';
               this.banner = res.data[0].entries;
-              console.log(res.data);
           } else {
               this.status = 'fail';
           }      
@@ -52,6 +60,7 @@
 .bannershow{
     float: left;
     padding: 0.5rem;
+    z-index: 500;
 }
 img{
     width: 3rem;
@@ -65,6 +74,10 @@ p{
     width: 10px;
     height: 10px;
     border-radius: 5px;
-    background-color: black;
+    background-color: #eeeeee;
+    z-index: 1000;
+    position: absolute;
+    top: 16.2rem;
+
 }
 </style>
